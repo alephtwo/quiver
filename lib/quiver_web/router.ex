@@ -18,6 +18,9 @@ defmodule QuiverWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/users", UserController
+    resources "/lanes", LaneController
+    resources "/reservations", ReservationController
   end
 
   # Other scopes may use custom stacks.

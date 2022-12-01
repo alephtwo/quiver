@@ -1,0 +1,28 @@
+<h1>Show Reservation</h1>
+
+<ul>
+
+  <li>
+    <strong>Starts at:</strong>
+    <%= @reservation.starts_at %>
+  </li>
+
+  <li>
+    <strong>Ends at:</strong>
+    <%= @reservation.ends_at %>
+  </li>
+
+  <li>
+    <strong>Rental:</strong>
+    <%= @reservation.rental %>
+  </li>
+
+  <li>
+    <strong>Notes:</strong>
+    <%= @reservation.notes %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.reservation_path(@conn, :edit, @reservation) %></span> |
+<span><%= link "Back", to: Routes.reservation_path(@conn, :index) %></span>

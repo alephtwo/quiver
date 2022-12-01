@@ -1,0 +1,5 @@
+<h1>Edit Lane</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.lane_path(@conn, :update, @lane)) %>
+
+<span><%= link "Back", to: Routes.lane_path(@conn, :index) %></span>

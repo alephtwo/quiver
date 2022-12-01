@@ -1,0 +1,28 @@
+<h1>Listing Lanes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Notes</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for lane <- @lanes do %>
+    <tr>
+      <td><%= lane.number %></td>
+      <td><%= lane.notes %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.lane_path(@conn, :show, lane) %></span>
+        <span><%= link "Edit", to: Routes.lane_path(@conn, :edit, lane) %></span>
+        <span><%= link "Delete", to: Routes.lane_path(@conn, :delete, lane), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Lane", to: Routes.lane_path(@conn, :new) %></span>
