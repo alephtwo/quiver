@@ -1,5 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost/quiver_dev
-    username: postgres
-    password: postgres

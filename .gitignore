@@ -1,8 +1,2 @@
-# Build
-/target
-
-# Dev Config
-/application.yml
-
 # Visual Studio Code
 /.vscode
