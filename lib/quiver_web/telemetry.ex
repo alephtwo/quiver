@@ -1,3 +1,4 @@
+# credo:disable-for-next-line Credo.Check.Readability.ModuleDoc
 defmodule QuiverWeb.Telemetry do
   use Supervisor
   import Telemetry.Metrics
