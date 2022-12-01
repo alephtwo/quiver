@@ -1,0 +1,19 @@
+---
+spring:
+  config:
+    location: /application.yml,classpath:/application.yml
+  datasource:
+    url: jdbc:postgresql://${SCRIPTREPO_DB_HOST}:5432/${SCRIPTREPO_DB_NAME}
+    username: ${SCRIPTREPO_DB_USERNAME}
+    password: ${SCRIPTREPO_DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    change-log: classpath:db/changelog.xml
+server:
+  port: 8080
+  servlet:
+    contextPath: /api
