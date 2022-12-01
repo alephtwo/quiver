@@ -9,6 +9,7 @@
     <table class="table table-striped table-hover">
       <thead class="table-dark">
         <tr>
+          <th>ID</th>
           <th>Starts at</th>
           <th>Ends at</th>
           <th>Rental?</th>
@@ -19,7 +20,21 @@
       <tbody>
         <%= for reservation <- @reservations do %>
           <tr>
-            <td class="align-middle"><%= link reservation.name, to: Routes.reservation_path(@conn, :show, reservation) %></td>
+            <td class="align-middle">
+              <%= link reservation.id, to: Routes.reservation_path(@conn, :show, reservation) %>
+            </td>
+            <td class="align-middle">
+              <%= format_date(reservation.starts_at) %>
+            </td>
+            <td class="align-middle">
+              <%= format_date(reservation.starts_at) %>
+            </td>
+            <td class="align-middle">
+              <%= reservation.rental %>
+            </td>
+            <td class="align-middle">
+              <%= reservation.notes %>
+            </td>
             <td class="align-middle text-end">
               <%= link "Edit", to: Routes.reservation_path(@conn, :edit, reservation), class: "btn btn-info" %>
               <%= link "Delete", to: Routes.reservation_path(@conn, :delete, reservation), class: "btn btn-danger", method: :delete, data: [confirm: "Are you sure?"] %>

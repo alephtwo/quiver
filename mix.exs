@@ -52,7 +52,8 @@ defmodule Quiver.MixProject do
       {:plug_cowboy, "~> 2.5"},
       # Other
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:dart_sass, "~> 0.5.1"}
+      {:dart_sass, "~> 0.5.1"},
+      {:tz, "~> 0.24.0"}
     ]
   end
 

@@ -7,6 +7,8 @@
 # General application configuration
 import Config
 
+config :elixir, :time_zone_database, Tz.TimeZoneDatabase
+
 config :quiver,
   ecto_repos: [Quiver.Repo],
   generators: [binary_id: true]
