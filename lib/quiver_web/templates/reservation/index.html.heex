@@ -3,7 +3,9 @@
     <h1>Reservations</h1>
   </div>
   <div class="d-flex flex-row-reverse">
-    <%= link "New Reservation", to: Routes.reservation_path(@conn, :new), class: "btn btn-primary" %>
+    <%= link to: Routes.reservation_path(@conn, :new), class: "btn btn-primary" do %>
+      <i class="fa-solid fa-plus"></i> New Reservation
+    <% end %>
   </div>
   <div>
     <table class="table table-striped table-hover">
@@ -36,8 +38,12 @@
               <%= reservation.notes %>
             </td>
             <td class="align-middle text-end">
-              <%= link "Edit", to: Routes.reservation_path(@conn, :edit, reservation), class: "btn btn-info" %>
-              <%= link "Delete", to: Routes.reservation_path(@conn, :delete, reservation), class: "btn btn-danger", method: :delete, data: [confirm: "Are you sure?"] %>
+              <%= link to: Routes.reservation_path(@conn, :edit, reservation), class: "btn btn-info btn-sm" do %>
+                <i class="fa-solid fa-edit"></i>
+              <% end %>
+              <%= link to: Routes.reservation_path(@conn, :delete, reservation), class: "btn btn-danger btn-sm", method: :delete, data: [confirm: "Are you sure?"] do %>
+                <i class="fa-solid fa-trash"></i>
+              <% end %>
             </td>
           </tr>
         <% end %>

@@ -19,7 +19,7 @@ defmodule QuiverWeb.Router do
 
     get "/", PageController, :index
     resources "/users", UserController
-    resources "/lanes", LaneController
+    resources "/lanes", LaneController, except: [:show]
     resources "/reservations", ReservationController
   end
 
