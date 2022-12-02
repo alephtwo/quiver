@@ -98,7 +98,7 @@ defmodule QuiverWeb do
       import QuiverWeb.ErrorHelpers
       import QuiverWeb.Gettext
       alias QuiverWeb.Router.Helpers, as: Routes
-      import QuiverWeb.ApplicationHelper
+      import QuiverWeb.ApplicationHelpers
     end
   end
 

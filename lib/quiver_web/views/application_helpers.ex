@@ -1,4 +1,4 @@
-defmodule QuiverWeb.ApplicationHelper do
+defmodule QuiverWeb.ApplicationHelpers do
   @spec format_date(DateTime.t()) :: String.t()
   def format_date(utc_datetime) do
     utc_datetime

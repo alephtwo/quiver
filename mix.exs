@@ -10,7 +10,14 @@ defmodule Quiver.MixProject do
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -53,6 +60,7 @@ defmodule Quiver.MixProject do
       # Other
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dart_sass, "~> 0.5.1"},
+      {:excoveralls, "~> 0.10", only: :test},
       {:tz, "~> 0.24.0"}
     ]
   end
