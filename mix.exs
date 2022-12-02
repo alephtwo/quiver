@@ -40,6 +40,7 @@ defmodule Quiver.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:argon2_elixir, "~> 3.0"},
       # Phoenix
       {:phoenix, "~> 1.6.15"},
       {:phoenix_ecto, "~> 4.4"},
