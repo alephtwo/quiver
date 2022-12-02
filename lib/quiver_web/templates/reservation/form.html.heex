@@ -5,23 +5,25 @@
     </div>
   <% end %>
 
-  <%= label f, :starts_at %>
-  <%= text_input f, :starts_at %>
+  <div class="form-check">
+    <%= checkbox f, :rental, class: add_validation(f, :rental, "form-check-input") %>
+    <%= label f, :rental, class: "form-check-label" %>
+    <%= error_tag f, :rental %>
+  </div>
+
+  <%= label f, :starts_at, class: "form-label" %>
+  <%= text_input f, :starts_at, class: add_validation(f, :starts_at, "form-control") %>
   <%= error_tag f, :starts_at %>
 
-  <%= label f, :ends_at %>
-  <%= text_input f, :ends_at %>
+  <%= label f, :ends_at, class: "form-label" %>
+  <%= text_input f, :ends_at, class: add_validation(f, :ends_at, "form-control") %>
   <%= error_tag f, :ends_at %>
 
-  <%= label f, :rental %>
-  <%= checkbox f, :rental %>
-  <%= error_tag f, :rental %>
-
-  <%= label f, :notes %>
-  <%= textarea f, :notes %>
+  <%= label f, :notes, class: "form-label" %>
+  <%= textarea f, :notes, class: add_validation(f, :notes, "form-control") %>
   <%= error_tag f, :notes %>
 
-  <div>
-    <%= submit "Save" %>
+  <div class="my-2">
+    <%= submit "Save", class: "btn btn-success" %>
   </div>
 </.form>
