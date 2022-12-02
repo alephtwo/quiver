@@ -10,11 +10,24 @@ defmodule QuiverWeb.ErrorHelpers do
   """
   def error_tag(form, field) do
     Enum.map(Keyword.get_values(form.errors, field), fn error ->
+      IO.inspect(input_name(form, field))
+
       content_tag(:span, translate_error(error),
         class: "invalid-feedback",
         phx_feedback_for: input_name(form, field)
       )
     end)
+  end
+
+  @doc """
+  Appends Bootstrap error class to input if there's an error.
+  """
+  def add_validation(form, field, class) do
+    if Keyword.has_key?(form.errors, field) do
+      class <> " is-invalid"
+    else
+      class
+    end
   end
 
   @doc """
