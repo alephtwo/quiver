@@ -10,5 +10,6 @@ defmodule Quiver.Repo.Migrations.CreateLanes do
     end
 
     create unique_index(:lanes, [:number])
+    create constraint(:lanes, "lane_number_must_be_positive", check: "number > 0")
   end
 end

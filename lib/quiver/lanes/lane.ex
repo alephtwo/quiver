@@ -16,5 +16,6 @@ defmodule Quiver.Lanes.Lane do
     |> cast(attrs, [:number, :notes])
     |> validate_required([:number])
     |> unique_constraint([:number])
+    |> validate_number(:number, greater_than: 0)
   end
 end

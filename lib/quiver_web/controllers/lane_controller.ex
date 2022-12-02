@@ -5,7 +5,7 @@ defmodule QuiverWeb.LaneController do
   alias Quiver.Lanes.Lane
 
   def index(conn, _params) do
-    lanes = Lanes.list_lanes()
+    lanes = Lanes.list_lanes() |> Enum.sort_by(fn x -> x.number end)
     render(conn, "index.html", lanes: lanes)
   end
 
@@ -16,10 +16,10 @@ defmodule QuiverWeb.LaneController do
 
   def create(conn, %{"lane" => lane_params}) do
     case Lanes.create_lane(lane_params) do
-      {:ok, lane} ->
+      {:ok, _lane} ->
         conn
         |> put_flash(:info, "Lane created successfully.")
-        |> redirect(to: Routes.lane_path(conn, :show, lane))
+        |> redirect(to: Routes.lane_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -41,10 +41,10 @@ defmodule QuiverWeb.LaneController do
     lane = Lanes.get_lane!(id)
 
     case Lanes.update_lane(lane, lane_params) do
-      {:ok, lane} ->
+      {:ok, _lane} ->
         conn
         |> put_flash(:info, "Lane updated successfully.")
-        |> redirect(to: Routes.lane_path(conn, :show, lane))
+        |> redirect(to: Routes.lane_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", lane: lane, changeset: changeset)

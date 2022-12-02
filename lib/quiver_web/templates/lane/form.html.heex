@@ -5,15 +5,20 @@
     </div>
   <% end %>
 
-  <%= label f, :number %>
-  <%= number_input f, :number %>
-  <%= error_tag f, :number %>
+  <div class="mb-3">
+    <%= label f, :number, class: "form-label" %>
+    <%= number_input f, :number, class: "form-control" %>
+    <%= error_tag f, :number %>
+  </div>
 
-  <%= label f, :notes %>
-  <%= textarea f, :notes %>
-  <%= error_tag f, :notes %>
+  <div class="mb-3">
+    <%= label f, :notes, class: "form-label" %>
+    <%= textarea f, :notes, class: "form-control" %>
+    <%= error_tag f, :notes %>
+  </div>
 
   <div>
-    <%= submit "Save" %>
+    <%= submit "Save", class: "btn btn-success" %>
+    <%= link "Back", to: Routes.lane_path(@conn, :index), class: "btn btn-info" %>
   </div>
 </.form>
