@@ -8,7 +8,7 @@ defmodule Quiver.LanesTest do
 
     import Quiver.LanesFixtures
 
-    @invalid_attrs %{notes: nil, number: nil}
+    @invalid_attrs %{number: nil}
 
     test "list_lanes/0 returns all lanes" do
       lane = lane_fixture()
@@ -21,10 +21,9 @@ defmodule Quiver.LanesTest do
     end
 
     test "create_lane/1 with valid data creates a lane" do
-      valid_attrs = %{notes: "some notes", number: 42}
+      valid_attrs = %{number: 42}
 
       assert {:ok, %Lane{} = lane} = Lanes.create_lane(valid_attrs)
-      assert lane.notes == "some notes"
       assert lane.number == 42
     end
 
@@ -34,10 +33,9 @@ defmodule Quiver.LanesTest do
 
     test "update_lane/2 with valid data updates the lane" do
       lane = lane_fixture()
-      update_attrs = %{notes: "some updated notes", number: 43}
+      update_attrs = %{number: 43}
 
       assert {:ok, %Lane{} = lane} = Lanes.update_lane(lane, update_attrs)
-      assert lane.notes == "some updated notes"
       assert lane.number == 43
     end
 

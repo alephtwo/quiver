@@ -10,10 +10,7 @@ defmodule Quiver.LanesFixtures do
   def lane_fixture(attrs \\ %{}) do
     {:ok, lane} =
       attrs
-      |> Enum.into(%{
-        notes: "some notes",
-        number: 42
-      })
+      |> Enum.into(%{number: 42})
       |> Quiver.Lanes.create_lane()
 
     lane

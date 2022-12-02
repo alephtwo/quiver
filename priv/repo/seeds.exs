@@ -9,3 +9,7 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+alias Quiver.Repo
+alias Quiver.Lanes.Lane
+
+for i <- 1..12, do: Repo.insert!(%Lane{number: i})

@@ -20,7 +20,7 @@ defmodule QuiverWeb.ReservationControllerTest do
   describe "index" do
     test "lists all reservations", %{conn: conn} do
       conn = get(conn, Routes.reservation_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Reservations"
+      assert html_response(conn, 200) =~ "Reservations"
     end
   end
 
