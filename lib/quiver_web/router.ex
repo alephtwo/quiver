@@ -18,7 +18,6 @@ defmodule QuiverWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/users", UserController
     resources "/lanes", LaneController, except: [:show]
     resources "/reservations", ReservationController
   end
