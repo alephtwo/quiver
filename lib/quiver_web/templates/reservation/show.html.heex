@@ -4,12 +4,12 @@
 
   <li>
     <strong>Starts at:</strong>
-    <%= @reservation.starts_at %>
+    <%= format_date(@reservation.starts_at) %>
   </li>
 
   <li>
     <strong>Ends at:</strong>
-    <%= @reservation.ends_at %>
+    <%= format_date(@reservation.ends_at) %>
   </li>
 
   <li>
