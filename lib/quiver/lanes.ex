@@ -5,7 +5,6 @@ defmodule Quiver.Lanes do
 
   import Ecto.Query, warn: false
   alias Quiver.Repo
-
   alias Quiver.Lanes.Lane
 
   @doc """
@@ -36,22 +35,4 @@ defmodule Quiver.Lanes do
 
   """
   def get_lane!(id), do: Repo.get!(Lane, id)
-
-  @doc """
-  Creates a lane.
-
-  ## Examples
-
-      iex> create_lane(%{field: value})
-      {:ok, %Lane{}}
-
-      iex> create_lane(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_lane(attrs \\ %{}) do
-    %Lane{}
-    |> Lane.changeset(attrs)
-    |> Repo.insert()
-  end
 end

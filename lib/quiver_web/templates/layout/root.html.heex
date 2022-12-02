@@ -23,9 +23,6 @@
               class: active_link(@conn, "home") %>
           </li>
           <li class="nav-item">
-            <%= link "Lanes", to: Routes.lane_path(@conn, :index), class: active_link(@conn, "lanes") %>
-          </li>
-          <li class="nav-item">
             <%= link "Reservations", to: Routes.reservation_path(@conn, :index), class: active_link(@conn, "reservations") %>
           </li>
         </ul>
@@ -37,14 +34,10 @@
             <li><%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "btn" %></li>
           <% else %>
             <li class="nav-item me-2">
-              <%= link to: Routes.user_registration_path(@conn, :new), class: "btn btn-primary btn-sm" do %>
-                <i class="fa-solid fa-plus"></i> Register
-              <% end %>
+              <%= link to: Routes.user_registration_path(@conn, :new), class: "btn btn-primary btn-sm" do %><i class="fa-solid fa-plus"></i> Register<% end %>
             </li>
             <li class="nav-item">
-              <%= link to: Routes.user_session_path(@conn, :new), class: "btn btn-success btn-sm" do %>
-                <i class="fa-solid fa-key"></i> Log In
-              <% end %>
+              <%= link to: Routes.user_session_path(@conn, :new), class: "btn btn-success btn-sm" do %><i class="fa-solid fa-key"></i> Log In<% end %>
             </li>
           <% end %>
           </ul>
