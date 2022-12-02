@@ -1,4 +1,7 @@
 defmodule Quiver.Lanes.Lane do
+  @moduledoc """
+  A lane represents a given lane in the range.
+  """
   use Ecto.Schema
   import Ecto.Changeset
 

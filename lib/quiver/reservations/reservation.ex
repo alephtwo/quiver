@@ -1,4 +1,7 @@
 defmodule Quiver.Reservations.Reservation do
+  @moduledoc """
+  A reservation represents a chunk of time where certain lanes are blocked off.
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
