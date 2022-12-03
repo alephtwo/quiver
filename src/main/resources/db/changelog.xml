@@ -4,23 +4,6 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
-  <changeSet id="Create users table" author="alephtwo">
-    <createTable tableName="users">
-      <column name="id" type="uuid">
-        <constraints primaryKey="true" primaryKeyName="pk_users" nullable="false" />
-      </column>
-      <column name="name" type="text">
-        <constraints nullable="false" />
-      </column>
-      <column name="created_at" type="timestamp with time zone" defaultValueComputed="current_timestamp()">
-        <constraints nullable="false" />
-      </column>
-      <column name="updated_at" type="timestamp with time zone" defaultValueComputed="current_timestamp()">
-        <constraints nullable="false" />
-      </column>
-    </createTable>
-  </changeSet>
-
   <changeSet id="Create lanes table" author="alephtwo">
     <createTable tableName="lanes">
       <column name="id" type="uuid">
