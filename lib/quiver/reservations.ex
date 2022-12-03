@@ -18,7 +18,9 @@ defmodule Quiver.Reservations do
 
   """
   def list_reservations do
-    Repo.all(Reservation)
+    Reservation
+    |> Repo.all()
+    |> Repo.preload([:lanes])
   end
 
   @doc """
