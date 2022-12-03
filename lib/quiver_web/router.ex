@@ -21,7 +21,6 @@ defmodule QuiverWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/reservations", ReservationController
 
     delete "/users/log_out", UserSessionController, :delete
     get "/users/confirm", UserConfirmationController, :new
@@ -48,6 +47,7 @@ defmodule QuiverWeb.Router do
   scope "/", QuiverWeb do
     pipe_through [:browser, :require_authenticated_user]
 
+    resources "/reservations", ReservationController
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
