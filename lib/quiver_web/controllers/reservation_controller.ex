@@ -6,6 +6,7 @@ defmodule QuiverWeb.ReservationController do
 
   def index(conn, _params) do
     reservations = Reservations.list_reservations()
+      |> Enum.sort_by(fn r -> r.starts_at end)
     render(conn, "index.html", reservations: reservations)
   end
 

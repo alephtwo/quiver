@@ -32,7 +32,7 @@
               <%= format_date(reservation.ends_at) %>
             </td>
             <td class="align-middle">
-              <%= reservation.rental %>
+              <%= if reservation.rental, do: "Yes", else: "No" %>
             </td>
             <td class="align-middle">
               <%= reservation.notes %>
