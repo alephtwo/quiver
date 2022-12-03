@@ -1,5 +1,5 @@
 <div class="d-grid gap-1">
-  <div class="text-center">
+  <div>
     <h1>Reservations</h1>
   </div>
   <div class="d-flex flex-row-reverse">
@@ -29,7 +29,7 @@
               <%= format_date(reservation.starts_at) %>
             </td>
             <td class="align-middle">
-              <%= format_date(reservation.starts_at) %>
+              <%= format_date(reservation.ends_at) %>
             </td>
             <td class="align-middle">
               <%= reservation.rental %>

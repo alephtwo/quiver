@@ -21,7 +21,6 @@ defmodule QuiverWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-
     delete "/users/log_out", UserSessionController, :delete
     get "/users/confirm", UserConfirmationController, :new
     post "/users/confirm", UserConfirmationController, :create
@@ -52,11 +51,6 @@ defmodule QuiverWeb.Router do
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", QuiverWeb do
-  #   pipe_through :api
-  # end
 
   # Enables LiveDashboard only for development
   #
