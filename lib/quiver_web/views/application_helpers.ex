@@ -7,6 +7,6 @@ defmodule QuiverWeb.ApplicationHelpers do
   def format_date(utc_datetime) do
     utc_datetime
     |> DateTime.shift_zone!("America/Los_Angeles")
-    |> Calendar.strftime("%Y-%m-%d %H:%M:%S %Z")
+    |> Calendar.strftime("%Y-%-m-%-d %-I:%M %p %Z")
   end
 end
