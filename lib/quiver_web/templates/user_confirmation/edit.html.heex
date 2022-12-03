@@ -2,11 +2,15 @@
 
 <.form let={_f} for={:user} action={Routes.user_confirmation_path(@conn, :update, @token)}>
   <div>
-    <%= submit "Confirm my account" %>
+    <%= submit class: "btn btn-success" do %><i class="fa-solid fa-check"></i> Confirm my account <% end %>
   </div>
 </.form>
 
-<p>
-  <%= link "Register", to: Routes.user_registration_path(@conn, :new) %> |
-  <%= link "Log in", to: Routes.user_session_path(@conn, :new) %>
-</p>
+<div class="my-2">
+  <%= link to: Routes.user_registration_path(@conn, :new), class: "btn btn-primary" do %>
+    <i class="fa-solid fa-plus"></i> Register
+  <% end %>
+  <%= link to: Routes.user_session_path(@conn, :new), class: "btn btn-success" do %>
+    <i class="fa-solid fa-key"></i> Log In
+  <% end %>
+</div>
