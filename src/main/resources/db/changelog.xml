@@ -2,9 +2,7 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd
-        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
   <changeSet id="Create users table" author="alephtwo">
     <createTable tableName="users">
@@ -14,17 +12,11 @@
       <column name="name" type="text">
         <constraints nullable="false" />
       </column>
-      <column name="created_at" type="timestamp with time zone">
+      <column name="created_at" type="timestamp with time zone" defaultValueComputed="current_timestamp()">
         <constraints nullable="false" />
       </column>
-      <column name="created_by" type="uuid">
-        <constraints nullable="false" references="users(id)" foreignKeyName="fk_users_created_by" />
-      </column>
-      <column name="updated_at" type="timestamp with time zone">
+      <column name="updated_at" type="timestamp with time zone" defaultValueComputed="current_timestamp()">
         <constraints nullable="false" />
-      </column>
-      <column name="updated_by" type="uuid">
-        <constraints nullable="false" references="users(id)" foreignKeyName="fk_users_updated_by" />
       </column>
     </createTable>
   </changeSet>
@@ -37,18 +29,11 @@
       <column name="number" type="int">
         <constraints nullable="false" unique="true" uniqueConstraintName="uk_lanes_number" />
       </column>
-      <column name="notes" type="text" />
-      <column name="created_at" type="timestamp with time zone">
+      <column name="created_at" type="timestamp with time zone" defaultValueComputed="current_timestamp()">
         <constraints nullable="false" />
       </column>
-      <column name="created_by" type="uuid">
-        <constraints nullable="false" references="users(id)" foreignKeyName="fk_lanes_created_by" />
-      </column>
-      <column name="updated_at" type="timestamp with time zone">
+      <column name="updated_at" type="timestamp with time zone" defaultValueComputed="current_timestamp()">
         <constraints nullable="false" />
-      </column>
-      <column name="updated_by" type="uuid">
-        <constraints nullable="false" references="users(id)" foreignKeyName="fk_lanes_updated_by" />
       </column>
     </createTable>
   </changeSet>
@@ -68,17 +53,11 @@
         <constraints nullable="false" />
       </column>
       <column name="notes" type="text" />
-      <column name="created_at" type="timestamp with time zone">
+      <column name="created_at" type="timestamp with time zone" defaultValueComputed="current_timestamp()">
         <constraints nullable="false" />
       </column>
-      <column name="created_by" type="uuid">
-        <constraints nullable="false" references="users(id)" foreignKeyName="fk_reservations_created_by" />
-      </column>
-      <column name="updated_at" type="timestamp with time zone">
+      <column name="updated_at" type="timestamp with time zone" defaultValueComputed="current_timestamp()">
         <constraints nullable="false" />
-      </column>
-      <column name="updated_by" type="uuid">
-        <constraints nullable="false" references="users(id)" foreignKeyName="fk_reservations_updated_by" />
       </column>
     </createTable>
   </changeSet>
@@ -92,5 +71,56 @@
         <constraints primaryKey="true" primaryKeyName="pk_lane_reservations" nullable="false" />
       </column>
     </createTable>
+  </changeSet>
+
+  <changeSet id="Create initial lanes" author="alephtwo">
+    <insert tableName="lanes">
+      <column name="id" valueComputed="gen_random_uuid()" />
+      <column name="number" value="1" />
+    </insert>
+    <insert tableName="lanes">
+      <column name="id" valueComputed="gen_random_uuid()" />
+      <column name="number" value="2" />
+    </insert>
+    <insert tableName="lanes">
+      <column name="id" valueComputed="gen_random_uuid()" />
+      <column name="number" value="3" />
+    </insert>
+    <insert tableName="lanes">
+      <column name="id" valueComputed="gen_random_uuid()" />
+      <column name="number" value="4" />
+    </insert>
+    <insert tableName="lanes">
+      <column name="id" valueComputed="gen_random_uuid()" />
+      <column name="number" value="5" />
+    </insert>
+    <insert tableName="lanes">
+      <column name="id" valueComputed="gen_random_uuid()" />
+      <column name="number" value="6" />
+    </insert>
+    <insert tableName="lanes">
+      <column name="id" valueComputed="gen_random_uuid()" />
+      <column name="number" value="7" />
+    </insert>
+    <insert tableName="lanes">
+      <column name="id" valueComputed="gen_random_uuid()" />
+      <column name="number" value="8" />
+    </insert>
+    <insert tableName="lanes">
+      <column name="id" valueComputed="gen_random_uuid()" />
+      <column name="number" value="9" />
+    </insert>
+    <insert tableName="lanes">
+      <column name="id" valueComputed="gen_random_uuid()" />
+      <column name="number" value="10" />
+    </insert>
+    <insert tableName="lanes">
+      <column name="id" valueComputed="gen_random_uuid()" />
+      <column name="number" value="11" />
+    </insert>
+    <insert tableName="lanes">
+      <column name="id" valueComputed="gen_random_uuid()" />
+      <column name="number" value="12" />
+    </insert>
   </changeSet>
 </databaseChangeLog>

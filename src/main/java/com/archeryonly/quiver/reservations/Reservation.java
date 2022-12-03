@@ -1,7 +1,6 @@
 package com.archeryonly.quiver.reservations;
 
 import com.archeryonly.quiver.lanes.Lane;
-import com.archeryonly.quiver.users.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.Instant;
 import java.util.Set;
@@ -26,9 +24,7 @@ public class Reservation {
     private Boolean rental;
     private String notes;
     private Instant createdAt;
-    private User createdBy;
     private Instant updatedAt;
-    private User updatedBy;
     private Set<Lane> lanes;
 
     @Id
@@ -87,16 +83,6 @@ public class Reservation {
         this.createdAt = createdAt;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "created_by")
-    public User getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(final User createdBy) {
-        this.createdBy = createdBy;
-    }
-
     @Column(name = "updated_at")
     public Instant getUpdatedAt() {
         return updatedAt;
@@ -104,16 +90,6 @@ public class Reservation {
 
     public void setUpdatedAt(final Instant updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "updated_by")
-    public User getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(final User updatedBy) {
-        this.updatedBy = updatedBy;
     }
 
     @ManyToMany(cascade = {CascadeType.ALL})
