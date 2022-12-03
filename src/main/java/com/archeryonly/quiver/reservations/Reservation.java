@@ -104,4 +104,14 @@ public class Reservation {
     public void setLanes(final Set<Lane> lanes) {
         this.lanes = lanes;
     }
+
+    public void merge(final Reservation reservation) {
+        this.startsAt = reservation.startsAt;
+        this.endsAt = reservation.endsAt;
+        this.rental = reservation.rental;
+        this.notes = reservation.notes;
+        this.createdAt = reservation.createdAt;
+        this.updatedAt = reservation.updatedAt;
+        this.lanes = reservation.lanes;
+    }
 }
