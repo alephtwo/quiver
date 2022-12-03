@@ -1,3 +1,4 @@
+# credo:disable-for-next-line Credo.Check.Readability.ModuleDoc
 defmodule Quiver.Accounts.UserToken do
   use Ecto.Schema
   import Ecto.Query

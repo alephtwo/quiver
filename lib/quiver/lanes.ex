@@ -4,8 +4,8 @@ defmodule Quiver.Lanes do
   """
 
   import Ecto.Query, warn: false
-  alias Quiver.Repo
   alias Quiver.Lanes.Lane
+  alias Quiver.Repo
 
   @doc """
   Returns the list of lanes.

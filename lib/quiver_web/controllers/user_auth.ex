@@ -1,3 +1,4 @@
+# credo:disable-for-next-line Credo.Check.Readability.ModuleDoc
 defmodule QuiverWeb.UserAuth do
   import Plug.Conn
   import Phoenix.Controller

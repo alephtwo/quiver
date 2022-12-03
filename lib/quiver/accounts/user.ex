@@ -1,4 +1,7 @@
 defmodule Quiver.Accounts.User do
+  @moduledoc """
+  Represents a given user within the system.
+  """
   use Ecto.Schema
   import Ecto.Changeset
   @primary_key {:id, :binary_id, autogenerate: true}

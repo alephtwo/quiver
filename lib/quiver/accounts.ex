@@ -4,9 +4,8 @@ defmodule Quiver.Accounts do
   """
 
   import Ecto.Query, warn: false
+  alias Quiver.Accounts.{User, UserNotifier, UserToken}
   alias Quiver.Repo
-
-  alias Quiver.Accounts.{User, UserToken, UserNotifier}
 
   ## Database getters
 

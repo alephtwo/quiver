@@ -1,3 +1,4 @@
+# credo:disable-for-next-line Credo.Check.Readability.ModuleDoc
 defmodule Quiver.Accounts.UserNotifier do
   import Swoosh.Email
 
