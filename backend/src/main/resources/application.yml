@@ -3,9 +3,9 @@ spring:
   config:
     location: /application.yml,classpath:/application.yml
   datasource:
-    url: jdbc:postgresql://${SCRIPTREPO_DB_HOST}:5432/${SCRIPTREPO_DB_NAME}
-    username: ${SCRIPTREPO_DB_USERNAME}
-    password: ${SCRIPTREPO_DB_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/quiver
+    username: postgres
+    password: postgres
   jpa:
     open-in-view: false
     properties:
