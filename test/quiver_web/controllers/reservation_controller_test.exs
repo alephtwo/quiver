@@ -1,4 +1,5 @@
 defmodule QuiverWeb.ReservationControllerTest do
+  alias Quiver.AccountsFixtures
   use QuiverWeb.ConnCase
 
   import Quiver.ReservationsFixtures
@@ -18,6 +19,8 @@ defmodule QuiverWeb.ReservationControllerTest do
   @invalid_attrs %{ends_at: nil, notes: nil, rental: nil, starts_at: nil}
 
   describe "index" do
+    setup [:log_in]
+
     test "lists all reservations", %{conn: conn} do
       conn = get(conn, Routes.reservation_path(conn, :index))
       assert html_response(conn, 200) =~ "Reservations"
@@ -25,6 +28,8 @@ defmodule QuiverWeb.ReservationControllerTest do
   end
 
   describe "new reservation" do
+    setup [:log_in]
+
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.reservation_path(conn, :new))
       assert html_response(conn, 200) =~ "New Reservation"
@@ -32,6 +37,8 @@ defmodule QuiverWeb.ReservationControllerTest do
   end
 
   describe "create reservation" do
+    setup [:log_in]
+
     test "redirects to show when data is valid", %{conn: conn} do
       conn = post(conn, Routes.reservation_path(conn, :create), reservation: @create_attrs)
 
@@ -49,7 +56,7 @@ defmodule QuiverWeb.ReservationControllerTest do
   end
 
   describe "edit reservation" do
-    setup [:create_reservation]
+    setup [:create_reservation, :log_in]
 
     test "renders form for editing chosen reservation", %{conn: conn, reservation: reservation} do
       conn = get(conn, Routes.reservation_path(conn, :edit, reservation))
@@ -58,7 +65,7 @@ defmodule QuiverWeb.ReservationControllerTest do
   end
 
   describe "update reservation" do
-    setup [:create_reservation]
+    setup [:create_reservation, :log_in]
 
     test "redirects when data is valid", %{conn: conn, reservation: reservation} do
       conn =
@@ -79,7 +86,7 @@ defmodule QuiverWeb.ReservationControllerTest do
   end
 
   describe "delete reservation" do
-    setup [:create_reservation]
+    setup [:create_reservation, :log_in]
 
     test "deletes chosen reservation", %{conn: conn, reservation: reservation} do
       conn = delete(conn, Routes.reservation_path(conn, :delete, reservation))
@@ -89,6 +96,10 @@ defmodule QuiverWeb.ReservationControllerTest do
         get(conn, Routes.reservation_path(conn, :show, reservation))
       end
     end
+  end
+
+  defp log_in(%{conn: conn}) do
+    %{conn: log_in_user(conn, AccountsFixtures.user_fixture())}
   end
 
   defp create_reservation(_) do

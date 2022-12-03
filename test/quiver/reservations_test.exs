@@ -5,13 +5,15 @@ defmodule Quiver.ReservationsTest do
 
   describe "reservations" do
     alias Quiver.Reservations.Reservation
-
     import Quiver.ReservationsFixtures
 
     @invalid_attrs %{ends_at: nil, notes: nil, rental: nil, starts_at: nil}
 
     test "list_reservations/0 returns all reservations" do
-      reservation = reservation_fixture()
+      reservation =
+        reservation_fixture()
+        |> Repo.preload(:lanes)
+
       assert Reservations.list_reservations() == [reservation]
     end
 

@@ -13,7 +13,7 @@ defmodule QuiverWeb.UserSessionControllerTest do
       response = html_response(conn, 200)
       assert response =~ "<h1>Log in</h1>"
       assert response =~ "Register</a>"
-      assert response =~ "Forgot your password?</a>"
+      assert response =~ "Forgot your password?\n</a>"
     end
 
     test "redirects if already logged in", %{conn: conn, user: user} do
@@ -37,7 +37,7 @@ defmodule QuiverWeb.UserSessionControllerTest do
       response = html_response(conn, 200)
       assert response =~ user.email
       assert response =~ "Settings</a>"
-      assert response =~ "Log out</a>"
+      assert response =~ "Log Out</a>"
     end
 
     test "logs the user in with remember me", %{conn: conn, user: user} do

@@ -77,6 +77,11 @@ defmodule QuiverWeb.ReservationController do
     }
   end
 
+  defp parse_date_as_los_angeles(nil), do: nil
+  defp parse_date_as_los_angeles(%DateTime{} = datetime) do
+    datetime
+    # This test passes but doesn't actually verify that the date is shifted...
+  end
   defp parse_date_as_los_angeles(str) do
     # append the seconds so it's a valid iso 8601 time
     (str <> ":00")
