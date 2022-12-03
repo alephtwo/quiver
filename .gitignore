@@ -1,12 +1,11 @@
+## Backend
 # Build
-/target
+/backend/target
+/backend/application.yml
 
-# Dev Config
-/application.yml
-
-# Visual Studio Code
-/.vscode
-
+## IDE
 # IntelliJ
 /.idea
 *.iml
+# Visual Studio Code
+/.vscode
