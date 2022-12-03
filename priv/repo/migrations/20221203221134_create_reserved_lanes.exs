@@ -4,7 +4,9 @@ defmodule Quiver.Repo.Migrations.CreateReservedLanes do
   def change do
     create table(:reserved_lanes, primary_key: false) do
       add :lane_id, references(:lanes, type: :uuid, on_delete: :delete_all), primary_key: true
-      add :reservation_id, references(:reservations, type: :uuid, on_delete: :delete_all), primary_key: true
+
+      add :reservation_id, references(:reservations, type: :uuid, on_delete: :delete_all),
+        primary_key: true
     end
 
     create index(:reserved_lanes, [:lane_id])
