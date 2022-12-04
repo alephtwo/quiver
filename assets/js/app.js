@@ -29,3 +29,11 @@ liveSocket.connect()
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
+
+// Set reservation end-at to be an hour after starts-at when it changes
+document.querySelector('#reservation-starts-at').addEventListener('change', (e) => {
+  const value = new Date(e.target.value + "Z");
+  value.setHours(value.getHours() + 1);
+  // but why would a loving god do this to us
+  document.querySelector('#reservation-ends-at').value = value.toISOString().slice(0, 16);
+});

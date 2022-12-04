@@ -12,11 +12,11 @@
   </div>
 
   <%= label f, :starts_at, class: "form-label" %>
-  <%= datetime_local_input f, :starts_at, required: true, class: add_validation(f, :starts_at, "form-control") %>
+  <%= datetime_local_input f, :starts_at, required: true, id: "reservation-starts-at", class: add_validation(f, :starts_at, "form-control") %>
   <%= error_tag f, :starts_at %>
 
   <%= label f, :ends_at, class: "form-label" %>
-  <%= datetime_local_input f, :ends_at, required: true, class: add_validation(f, :ends_at, "form-control") %>
+  <%= datetime_local_input f, :ends_at, required: true, id: "reservation-ends-at", class: add_validation(f, :ends_at, "form-control") %>
   <%= error_tag f, :ends_at %>
 
   <%= label f, :notes, class: "form-label" %>

@@ -14,7 +14,8 @@ defmodule QuiverWeb.ReservationController do
   end
 
   def new(conn, _params) do
-    changeset = Reservations.change_reservation(%Reservation{lanes: []})
+    now = DateTime.now!("America/Los_Angeles")
+    changeset = Reservations.change_reservation(%Reservation{starts_at: now, lanes: []})
 
     render(conn, "new.html", changeset: changeset, all_lanes: all_lanes_as_options())
   end
