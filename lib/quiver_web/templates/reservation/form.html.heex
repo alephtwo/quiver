@@ -12,15 +12,24 @@
   </div>
 
   <%= label f, :starts_at, class: "form-label" %>
-  <%= datetime_local_input f, :starts_at, class: add_validation(f, :starts_at, "form-control") %>
+  <%= datetime_local_input f, :starts_at, required: true, class: add_validation(f, :starts_at, "form-control") %>
   <%= error_tag f, :starts_at %>
 
   <%= label f, :ends_at, class: "form-label" %>
-  <%= datetime_local_input f, :ends_at, class: add_validation(f, :ends_at, "form-control") %>
+  <%= datetime_local_input f, :ends_at, required: true, class: add_validation(f, :ends_at, "form-control") %>
   <%= error_tag f, :ends_at %>
 
   <%= label f, :notes, class: "form-label" %>
   <%= textarea f, :notes, class: add_validation(f, :notes, "form-control") %>
+  <%= error_tag f, :notes %>
+
+  <%= label f, :lanes, class: "form-label" %>
+  <%= multiple_select f,
+    :lanes,
+    @all_lanes,
+    class: add_validation(f, :lanes, "form-select"),
+    selected: @selected_lanes
+  %>
   <%= error_tag f, :notes %>
 
   <div class="my-2">

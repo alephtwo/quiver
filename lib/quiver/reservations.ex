@@ -6,6 +6,7 @@ defmodule Quiver.Reservations do
   import Ecto.Query, warn: false
   alias Quiver.Repo
 
+  alias Quiver.Lanes
   alias Quiver.Reservations.Reservation
 
   @doc """
@@ -23,6 +24,7 @@ defmodule Quiver.Reservations do
     |> Repo.preload([:lanes])
   end
 
+  @spec get_reservation!(any) :: nil | [%{optional(atom) => any}] | %{optional(atom) => any}
   @doc """
   Gets a single reservation.
 
@@ -37,7 +39,7 @@ defmodule Quiver.Reservations do
       ** (Ecto.NoResultsError)
 
   """
-  def get_reservation!(id), do: Repo.get!(Reservation, id)
+  def get_reservation!(id), do: Repo.get!(Reservation, id) |> Repo.preload(:lanes)
 
   @doc """
   Creates a reservation.
@@ -54,6 +56,7 @@ defmodule Quiver.Reservations do
   def create_reservation(attrs \\ %{}) do
     %Reservation{}
     |> Reservation.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:lanes, Lanes.find(attrs["lanes"]))
     |> Repo.insert()
   end
 
@@ -72,6 +75,7 @@ defmodule Quiver.Reservations do
   def update_reservation(%Reservation{} = reservation, attrs) do
     reservation
     |> Reservation.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:lanes, Lanes.find(attrs["lanes"]))
     |> Repo.update()
   end
 

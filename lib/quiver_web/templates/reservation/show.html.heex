@@ -22,6 +22,15 @@
     <%= @reservation.notes %>
   </li>
 
+  <li>
+    <strong>Lanes:</strong>
+    <ul>
+      <%= for lane <- Enum.sort_by(@reservation.lanes, fn l -> l.number end) do %>
+        <li><%= lane.number %></li>
+      <% end %>
+    </ul>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.reservation_path(@conn, :edit, @reservation) %></span> |

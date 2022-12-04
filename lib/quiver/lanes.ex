@@ -21,6 +21,15 @@ defmodule Quiver.Lanes do
   end
 
   @doc """
+  Finds all Lanes with the given ids.
+  """
+  def find(nil), do: []
+
+  def find(ids) when is_list(ids) do
+    Repo.all(from l in Lane, where: l.id in ^ids)
+  end
+
+  @doc """
   Gets a single lane.
 
   Raises `Ecto.NoResultsError` if the Lane does not exist.

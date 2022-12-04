@@ -1,6 +1,7 @@
 defmodule QuiverWeb.ReservationController do
   use QuiverWeb, :controller
 
+  alias Quiver.Lanes
   alias Quiver.Reservations
   alias Quiver.Reservations.Reservation
 
@@ -13,8 +14,9 @@ defmodule QuiverWeb.ReservationController do
   end
 
   def new(conn, _params) do
-    changeset = Reservations.change_reservation(%Reservation{})
-    render(conn, "new.html", changeset: changeset)
+    changeset = Reservations.change_reservation(%Reservation{lanes: []})
+
+    render(conn, "new.html", changeset: changeset, all_lanes: all_lanes_as_options())
   end
 
   def create(conn, %{"reservation" => reservation_params}) do
@@ -35,9 +37,18 @@ defmodule QuiverWeb.ReservationController do
   end
 
   def edit(conn, %{"id" => id}) do
-    reservation = Reservations.get_reservation!(id) |> shift_tz_to_la()
+    reservation =
+      Reservations.get_reservation!(id)
+      |> Quiver.Repo.preload(:lanes)
+      |> shift_tz_to_la()
+
     changeset = Reservations.change_reservation(reservation)
-    render(conn, "edit.html", reservation: reservation, changeset: changeset)
+
+    render(conn, "edit.html",
+      reservation: reservation,
+      changeset: changeset,
+      all_lanes: all_lanes_as_options()
+    )
   end
 
   def update(conn, %{"id" => id, "reservation" => reservation_params}) do
@@ -78,14 +89,20 @@ defmodule QuiverWeb.ReservationController do
   end
 
   defp parse_date_as_los_angeles(nil), do: nil
+
   defp parse_date_as_los_angeles(%DateTime{} = datetime) do
     datetime
     # This test passes but doesn't actually verify that the date is shifted...
   end
+
   defp parse_date_as_los_angeles(str) do
     # append the seconds so it's a valid iso 8601 time
     (str <> ":00")
     |> NaiveDateTime.from_iso8601!()
     |> DateTime.from_naive!("America/Los_Angeles")
+  end
+
+  defp all_lanes_as_options() do
+    Enum.map(Lanes.list_lanes(), fn lane -> [key: lane.number, value: lane.id] end)
   end
 end
