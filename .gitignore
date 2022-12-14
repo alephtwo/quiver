@@ -3,6 +3,9 @@
 /backend/target
 /backend/application.yml
 
+## Frontend
+/frontend/dist
+
 ## IDE
 # IntelliJ
 /.idea
