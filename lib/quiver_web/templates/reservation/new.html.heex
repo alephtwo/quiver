@@ -1,9 +1,0 @@
-<div class="d-grid gap-2">
-  <div class="text-center">
-    <h1>New Reservation</h1>
-  </div>
-</div>
-
-<%= render "form.html", Map.put(assigns, :action, Routes.reservation_path(@conn, :create)) %>
-
-<span><%= link "Back", to: Routes.reservation_path(@conn, :index) %></span>

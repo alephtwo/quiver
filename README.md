@@ -1,19 +1,10 @@
 # Quiver
 
-To start your Phoenix server:
+## Development
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+* Install, start nginx
+* Copy backend/application.example.yml to backend/application.yml, fill out
+* Set nginx.conf in a config file
+* `cd backend && mvn clean install && mvn spring-boot:run` (starts backend on :8081)
+* `cd frontend && npm start` (starts frontend on :8080)
+* Navigate to `localhost:4000`
