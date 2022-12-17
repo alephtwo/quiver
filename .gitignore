@@ -4,7 +4,8 @@
 /backend/application.yml
 
 ## Frontend
-/frontend/dist
+/frontend/public
+/frontend/node_modules
 
 ## IDE
 # IntelliJ
