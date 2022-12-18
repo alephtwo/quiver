@@ -7,13 +7,7 @@ const mount = document.getElementById('app') as HTMLDivElement;
 const root = createRoot(mount);
 
 // Render it all
-const theme = createTheme({
-  palette: {
-    background: {
-      default: '#336699',
-    },
-  },
-});
+const theme = createTheme({});
 const app = (
   <ThemeProvider theme={theme}>
     <CssBaseline />
