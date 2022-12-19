@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { ScheduleSend } from '@mui/icons-material';
-import { Button } from '@mui/material';
-import { Container } from '@mui/system';
+import ScheduleSend from '@mui/icons-material/ScheduleSend';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
 import { NewReservationDialog } from './NewReservationDialog';
 
 export function Application(): JSX.Element {

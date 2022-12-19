@@ -1,22 +1,20 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import {
-  Autocomplete,
-  Button,
-  Checkbox,
-  CircularProgress,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  FormControlLabel,
-  FormGroup,
-  TextField,
-} from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import CircularProgress from '@mui/material/CircularProgress';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import SendIcon from '@mui/icons-material/Send';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
-import { Stack } from '@mui/system';
-import SendIcon from '@mui/icons-material/Send';
 import { Lane } from '../types/Lane';
 
 interface NewReservationDialogProps {

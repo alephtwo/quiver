@@ -1,6 +1,6 @@
+const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
 
 const paths = {
   entry: path.resolve(__dirname, 'src', 'index.tsx'),
@@ -12,13 +12,6 @@ const rules = {
   typescript: {
     test: /\.tsx?$/,
     loader: 'ts-loader',
-  },
-  webp: {
-    test: /\.webp$/,
-    loader: 'file-loader',
-    options: {
-      name: '[name].[ext]',
-    },
   },
 };
 
@@ -32,15 +25,20 @@ const plugins = {
 module.exports = {
   entry: paths.entry,
   output: {
-    filename: 'app.js',
+    filename: '[name].js',
     path: paths.target,
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
   },
   devtool: 'source-map',
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
   },
   module: {
-    rules: [rules.typescript, rules.webp],
+    rules: [rules.typescript],
   },
   plugins: [plugins.clean, plugins.html],
 };
