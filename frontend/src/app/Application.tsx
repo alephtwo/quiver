@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Stack } from '@mui/material';
+import { Container, Stack } from '@mui/material';
 import { Header } from './Header';
 import { Home } from './pages/Home';
 import { Schedule } from './pages/Schedule';
@@ -10,17 +10,19 @@ import { Navigation } from './Navigation';
 export function Application(): JSX.Element {
   const [tab, setTab] = useState(0);
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} alignItems="center">
       <Header />
-      <Page tab={0} currentTab={tab}>
-        <Home />
-      </Page>
-      <Page tab={1} currentTab={tab}>
-        <Schedule />
-      </Page>
-      <Page tab={2} currentTab={tab}>
-        <NewReservation />
-      </Page>
+      <Container>
+        <Page tab={0} currentTab={tab}>
+          <Home />
+        </Page>
+        <Page tab={1} currentTab={tab}>
+          <Schedule />
+        </Page>
+        <Page tab={2} currentTab={tab}>
+          <NewReservation />
+        </Page>
+      </Container>
       <Navigation tab={tab} setTab={setTab} />
     </Stack>
   );
