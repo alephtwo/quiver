@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Stack, Typography } from '@mui/material';
-import { Navigation } from './Navigation';
+import { Stack } from '@mui/material';
 import { Header } from './Header';
+import { Home } from './pages/Home';
+import { Schedule } from './pages/Schedule';
+import { NewReservation } from './pages/NewReservation';
+import { Navigation } from './Navigation';
 
 export function Application(): JSX.Element {
   const [tab, setTab] = useState(0);
@@ -10,13 +13,13 @@ export function Application(): JSX.Element {
     <Stack spacing={2}>
       <Header />
       <Page tab={0} currentTab={tab}>
-        <Typography variant="h1">Home</Typography>
+        <Home />
       </Page>
       <Page tab={1} currentTab={tab}>
-        <Typography variant="h1">Schedule</Typography>
+        <Schedule />
       </Page>
       <Page tab={2} currentTab={tab}>
-        <Typography variant="h1">New Reservation</Typography>
+        <NewReservation />
       </Page>
       <Navigation tab={tab} setTab={setTab} />
     </Stack>
