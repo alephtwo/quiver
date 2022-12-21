@@ -13,12 +13,22 @@ import {
 } from '@mui/material';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
-import { Lane } from '../../types/Lane';
 import SendIcon from '@mui/icons-material/Send';
+import { DateTime } from 'luxon';
+import { Lane } from '../../types/Lane';
+
+const dateTimeInputFormat = 'yyyy-MM-dd HH:mm';
 
 export function NewReservation(): JSX.Element {
-  const [selectingLanes, setSelectingLanes] = useState(false);
+  const [rental, setRental] = useState(false);
+  const [startsAt, setStartsAt] = useState<Date>(DateTime.now().toJSDate());
+  const [endsAt, setEndsAt] = useState<Date | null>(null);
   const [lanes, setLanes] = useState<readonly Lane[]>([]);
+  const [notes, setNotes] = useState('');
+
+  console.debug(startsAt);
+
+  const [selectingLanes, setSelectingLanes] = useState(false);
   const loading = selectingLanes && lanes.length === 0;
 
   useEffect(() => {
@@ -42,28 +52,38 @@ export function NewReservation(): JSX.Element {
         New Reservation
       </Typography>
       <FormGroup>
-        <FormControlLabel control={<Checkbox defaultChecked />} label="Rental" />
+        <FormControlLabel label="Rental" control={<Checkbox checked={rental} onChange={() => setRental(!rental)} />} />
       </FormGroup>
-      <LocalizationProvider dateAdapter={AdapterLuxon}>
+      <Stack direction="row" spacing={1} justifyContent="space-evenly">
         <DateTimePicker
           label="Starts At"
-          value={new Date()}
-          onChange={() => {
-            console.log('Implement');
+          value={startsAt}
+          onChange={(value: DateTime | null) => {
+            if (!value) {
+              console.error('startsAt cannot be null');
+              return;
+            }
+            setStartsAt(value.toJSDate());
+            setEndsAt(value.plus({ hours: 1 }).toJSDate());
           }}
-          renderInput={(params) => <TextField {...params} />}
+          inputFormat={dateTimeInputFormat}
+          renderInput={(params) => <TextField {...params} fullWidth />}
         />
-      </LocalizationProvider>
-      <LocalizationProvider dateAdapter={AdapterLuxon}>
         <DateTimePicker
           label="Ends At"
-          value={new Date()}
-          onChange={() => {
-            console.log('Implement');
+          value={endsAt}
+          onChange={(value: DateTime | null) => {
+            if (!value) {
+              console.error('endsAt cannot be null');
+              return;
+            }
+            setEndsAt(value.toJSDate());
           }}
-          renderInput={(params) => <TextField {...params} />}
+          inputFormat={dateTimeInputFormat}
+          renderInput={(params) => <TextField {...params} fullWidth />}
         />
-      </LocalizationProvider>
+      </Stack>
+
       <Autocomplete
         multiple
         filterSelectedOptions
@@ -90,7 +110,7 @@ export function NewReservation(): JSX.Element {
           />
         )}
       />
-      <TextField multiline rows={2} label="Notes" />
+      <TextField multiline rows={2} label="Notes" value={notes} onChange={(e) => setNotes(e.target.value)} />
       <Button variant="contained" color="primary" fullWidth startIcon={<SendIcon />}>
         Submit
       </Button>

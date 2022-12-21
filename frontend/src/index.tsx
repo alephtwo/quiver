@@ -5,6 +5,8 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Application } from './app/Application';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
 
 const mount = document.getElementById('app') as HTMLDivElement;
 const root = createRoot(mount);
@@ -24,8 +26,10 @@ function Root(): JSX.Element {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Application />
+      <LocalizationProvider dateAdapter={AdapterLuxon}>
+        <CssBaseline />
+        <Application />
+      </LocalizationProvider>
     </ThemeProvider>
   );
 }
