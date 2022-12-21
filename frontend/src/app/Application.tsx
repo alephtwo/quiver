@@ -9,6 +9,7 @@ export function Application(): JSX.Element {
   return (
     <>
       <Container sx={styles.container}></Container>
+
       <Navigation tab={tab} setTab={setTab} />
     </>
   );
