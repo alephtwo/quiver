@@ -11,8 +11,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
+import { DateTimePicker } from '@mui/x-date-pickers';
 import SendIcon from '@mui/icons-material/Send';
 import { DateTime } from 'luxon';
 import { Lane } from '../../types/Lane';
@@ -22,27 +21,24 @@ const dateTimeInputFormat = 'yyyy-MM-dd HH:mm';
 export function NewReservation(): JSX.Element {
   const [rental, setRental] = useState(false);
   const [startsAt, setStartsAt] = useState<Date>(DateTime.now().toJSDate());
-  const [endsAt, setEndsAt] = useState<Date | null>(null);
-  const [lanes, setLanes] = useState<readonly Lane[]>([]);
+  const [endsAt, setEndsAt] = useState<Date>(DateTime.now().plus({ hours: 1 }).toJSDate());
+  const [lanes, setLanes] = useState<Array<Lane>>([]);
   const [notes, setNotes] = useState('');
 
-  console.debug(startsAt);
-
+  const [allLanes, setAllLanes] = useState<readonly Lane[]>([]);
   const [selectingLanes, setSelectingLanes] = useState(false);
-  const loading = selectingLanes && lanes.length === 0;
+  const loading = selectingLanes && allLanes.length === 0;
 
   useEffect(() => {
     if (!loading) {
       return undefined;
     }
-    void fetch('/api/lanes')
-      .then((r) => r.json())
-      .then((r: Array<Lane>) => setLanes(r));
+    void fetchLanes().then((r: Array<Lane>) => setAllLanes(r));
   }, [loading]);
 
   useEffect(() => {
     if (!open) {
-      setLanes([]);
+      setAllLanes([]);
     }
   }, [open]);
 
@@ -83,7 +79,6 @@ export function NewReservation(): JSX.Element {
           renderInput={(params) => <TextField {...params} fullWidth />}
         />
       </Stack>
-
       <Autocomplete
         multiple
         filterSelectedOptions
@@ -93,7 +88,9 @@ export function NewReservation(): JSX.Element {
         onClose={() => setSelectingLanes(false)}
         isOptionEqualToValue={(option, value) => option.id == value.id}
         getOptionLabel={(option: Lane) => option.number.toString()}
-        options={lanes}
+        options={allLanes}
+        value={lanes}
+        onChange={(_e, v) => setLanes(v)}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -111,9 +108,63 @@ export function NewReservation(): JSX.Element {
         )}
       />
       <TextField multiline rows={2} label="Notes" value={notes} onChange={(e) => setNotes(e.target.value)} />
-      <Button variant="contained" color="primary" fullWidth startIcon={<SendIcon />}>
+      <Button
+        variant="contained"
+        color="primary"
+        fullWidth
+        startIcon={<SendIcon />}
+        onClick={() => {
+          createNewReservation({
+            rental: rental,
+            startsAt: startsAt,
+            endsAt: endsAt,
+            lanes: lanes,
+            notes: notes,
+          }).then((response) => {
+            if (response.ok) {
+              // reset
+              setRental(false);
+              setStartsAt(DateTime.now().toJSDate());
+              setEndsAt(DateTime.now().plus({ hours: 1 }).toJSDate());
+              setLanes([]);
+              setNotes('');
+            } else {
+              console.error(response);
+            }
+          });
+        }}
+      >
         Submit
       </Button>
     </Stack>
   );
+}
+
+async function fetchLanes(): Promise<Array<Lane>> {
+  return fetch('/api/lanes').then((r) => r.json());
+}
+
+interface CreateNewReservationRequestPayload {
+  rental: boolean;
+  startsAt: Date;
+  endsAt: Date;
+  lanes: Array<Lane>;
+  notes: string;
+}
+async function createNewReservation(payload: CreateNewReservationRequestPayload): Promise<Response> {
+  const body = {
+    rental: payload.rental,
+    startsAt: payload.startsAt.toISOString(),
+    endsAt: payload.endsAt ? payload.endsAt.toISOString() : payload.startsAt.toISOString(),
+    lanes: payload.lanes.map((lane) => lane.id),
+    notes: payload.notes,
+  };
+
+  return fetch('/reservations', {
+    method: 'post',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 }
