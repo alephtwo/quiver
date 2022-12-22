@@ -160,7 +160,7 @@ async function createNewReservation(payload: CreateNewReservationRequestPayload)
     notes: payload.notes,
   };
 
-  return fetch('/reservations', {
+  return fetch('/api/reservations', {
     method: 'post',
     body: JSON.stringify(body),
     headers: {
