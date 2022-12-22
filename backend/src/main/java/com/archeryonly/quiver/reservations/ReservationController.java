@@ -3,8 +3,8 @@ package com.archeryonly.quiver.reservations;
 import com.archeryonly.quiver.lanes.LaneRepository;
 import java.time.Instant;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("reservations")
 public class ReservationController {
     private final ReservationRepository repository;
-
     private final LaneRepository laneRepository;
 
     @Autowired
@@ -49,7 +48,8 @@ public class ReservationController {
         reservation.setRental(dto.rental());
         reservation.setStartsAt(dto.startsAt());
         reservation.setEndsAt(dto.endsAt());
-        reservation.setLanes(Set.copyOf(laneRepository.findAllById(dto.lanes())));
+        reservation.setLanes(
+                dto.lanes().stream().map(laneRepository::getReferenceById).collect(Collectors.toSet()));
         reservation.setNotes(dto.notes());
         reservation.setCreatedAt(Instant.now());
         reservation.setUpdatedAt(Instant.now());

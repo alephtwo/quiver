@@ -1,7 +1,6 @@
 package com.archeryonly.quiver.reservations;
 
 import com.archeryonly.quiver.lanes.Lane;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -92,7 +91,7 @@ public class Reservation {
         this.updatedAt = updatedAt;
     }
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany
     @JoinTable(
             name = "lane_reservations",
             joinColumns = {@JoinColumn(name = "reservation_id")},
