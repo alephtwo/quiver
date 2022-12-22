@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Container, Stack } from '@mui/material';
-import { Header } from './Header';
+import { Header } from './scaffold/Header';
 import { Home } from './pages/Home';
 import { Schedule } from './pages/Schedule';
 import { NewReservation } from './pages/NewReservation';
-import { Navigation } from './Navigation';
+import { Navigation } from './scaffold/Navigation';
 
 export function Application(): JSX.Element {
   const [tab, setTab] = useState(0);

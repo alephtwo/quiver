@@ -15,6 +15,7 @@ import { DateTimePicker } from '@mui/x-date-pickers';
 import SendIcon from '@mui/icons-material/Send';
 import { DateTime } from 'luxon';
 import { Lane } from '../../types/Lane';
+import { Flash, FlashMessage } from '../core/Flash';
 
 const dateTimeInputFormat = 'yyyy-MM-dd HH:mm';
 
@@ -24,6 +25,7 @@ export function NewReservation(): JSX.Element {
   const [endsAt, setEndsAt] = useState<Date>(DateTime.now().plus({ hours: 1 }).toJSDate());
   const [lanes, setLanes] = useState<Array<Lane>>([]);
   const [notes, setNotes] = useState('');
+  const [flash, setFlash] = useState<FlashMessage | undefined>(undefined);
 
   const [allLanes, setAllLanes] = useState<readonly Lane[]>([]);
   const [selectingLanes, setSelectingLanes] = useState(false);
@@ -47,6 +49,7 @@ export function NewReservation(): JSX.Element {
       <Typography variant="h4" align="center">
         New Reservation
       </Typography>
+      <Flash message={flash} onClose={() => setFlash(undefined)} />
       <FormGroup>
         <FormControlLabel label="Rental" control={<Checkbox checked={rental} onChange={() => setRental(!rental)} />} />
       </FormGroup>
@@ -114,7 +117,7 @@ export function NewReservation(): JSX.Element {
         fullWidth
         startIcon={<SendIcon />}
         onClick={() => {
-          createNewReservation({
+          void createNewReservation({
             rental: rental,
             startsAt: startsAt,
             endsAt: endsAt,
@@ -128,6 +131,7 @@ export function NewReservation(): JSX.Element {
               setEndsAt(DateTime.now().plus({ hours: 1 }).toJSDate());
               setLanes([]);
               setNotes('');
+              setFlash({ severity: 'success', message: 'Saved!' });
             } else {
               console.error(response);
             }
@@ -141,7 +145,7 @@ export function NewReservation(): JSX.Element {
 }
 
 async function fetchLanes(): Promise<Array<Lane>> {
-  return fetch('/api/lanes').then((r) => r.json());
+  return fetch('/api/lanes').then((r) => r.json() as Promise<Array<Lane>>);
 }
 
 interface CreateNewReservationRequestPayload {
