@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Card, CardContent, CardHeader, Skeleton, Typography } from '@mui/material';
+import { Card, CardContent, CardHeader, IconButton, Skeleton, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useEffect } from 'react';
 import { Message } from '../../reducer/Message';
 import { Reservation } from '../../types/Reservation';
 import { DateTime } from 'luxon';
 import { Lane } from '../../types/Lane';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 interface HomeProps {
   dispatch: React.Dispatch<Message>;
@@ -43,7 +44,15 @@ export function Home(props: HomeProps): JSX.Element {
         const subheader = `${startsAt} - ${endsAt}`;
         return (
           <Card key={r.id}>
-            <CardHeader title={buildTitle(r.lanes)} subheader={subheader} />
+            <CardHeader
+              title={buildTitle(r.lanes)}
+              subheader={subheader}
+              action={
+                <IconButton color="error">
+                  <DeleteForeverIcon />
+                </IconButton>
+              }
+            />
             {r.notes === '' ? <></> : <CardContent>{r.notes}</CardContent>}
           </Card>
         );
