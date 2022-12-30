@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   Autocomplete,
   Button,
@@ -15,7 +15,6 @@ import { DateTimePicker } from '@mui/x-date-pickers';
 import SendIcon from '@mui/icons-material/Send';
 import { DateTime } from 'luxon';
 import { Lane } from '../../types/Lane';
-import { Flash, FlashMessage } from '../core/Flash';
 import { Message } from '../../reducer/Message';
 import { NewReservationState } from '../../reducer/State';
 import { Tab } from '../../types/Tab';
@@ -30,7 +29,6 @@ interface NewReservationProps {
 }
 export function NewReservation(props: NewReservationProps): JSX.Element {
   const { dispatch, state } = props;
-  const [flash, setFlash] = useState<FlashMessage | undefined>(undefined);
   const loading = state.selectingLanes && props.allLanes.length === 0;
 
   useEffect(() => {
@@ -52,7 +50,6 @@ export function NewReservation(props: NewReservationProps): JSX.Element {
       <Typography variant="h4" align="center">
         New Reservation
       </Typography>
-      <Flash message={flash} onClose={() => setFlash(undefined)} />
       <FormGroup>
         <FormControlLabel
           label="Rental"
@@ -130,7 +127,6 @@ export function NewReservation(props: NewReservationProps): JSX.Element {
             notes: state.notes,
           }).then((response) => {
             if (response.ok) {
-              setFlash({ severity: 'success', message: 'Saved!' });
               dispatch({ action: 'set-tab', tab: Tab.HOME });
             } else {
               console.error(response);
