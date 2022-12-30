@@ -17,8 +17,7 @@ import { DateTime } from 'luxon';
 import { Lane } from '../../types/Lane';
 import { Message } from '../../reducer/Message';
 import { NewReservationState } from '../../reducer/State';
-import { Tab } from '../../types/Tab';
-import { createNewReservation, fetchLanes } from '../../reducer/Rest';
+import { fetchLanes } from '../../reducer/Rest';
 
 const dateTimeInputFormat = 'yyyy-MM-dd HH:mm';
 
@@ -121,7 +120,10 @@ export function NewReservation(props: NewReservationProps): JSX.Element {
         onClick={() =>
           dispatch({
             action: 'save-new-reservation',
-            then: () => dispatch({ action: 'finish-save-new-reservation' }),
+            then: () => {
+              dispatch({ action: 'finish-save-new-reservation' });
+              dispatch({ action: 'set-snackbar', severity: 'success', text: 'Saved!' });
+            },
           })
         }
       >

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useReducer } from 'react';
-import { Container, Stack } from '@mui/material';
+import { Alert, Container, Snackbar, Stack } from '@mui/material';
 import { Header } from './scaffold/Header';
 import { Home } from './pages/Home';
 import { Schedule } from './pages/Schedule';
@@ -11,7 +11,7 @@ import { initialState } from '../reducer/State';
 import { reduce } from '../reducer/Reducer';
 
 export function Application(): JSX.Element {
-  const [state, dispatch] = useReducer(reduce, initialState);
+  const [state, dispatch] = useReducer(reduce, initialState());
   const { tab } = state;
 
   return (
@@ -29,6 +29,19 @@ export function Application(): JSX.Element {
         </Page>
       </Container>
       <Navigation tab={tab} setTab={(t) => dispatch({ action: 'set-tab', tab: t })} />
+      <Snackbar
+        open={state.snackbar.open}
+        autoHideDuration={6000}
+        onClose={() => dispatch({ action: 'close-snackbar' })}
+      >
+        <Alert
+          onClose={() => dispatch({ action: 'close-snackbar' })}
+          severity={state.snackbar.severity}
+          variant="filled"
+        >
+          {state.snackbar.text}
+        </Alert>
+      </Snackbar>
     </Stack>
   );
 }

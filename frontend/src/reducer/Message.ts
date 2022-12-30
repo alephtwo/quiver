@@ -1,3 +1,4 @@
+import { AlertColor } from '@mui/material';
 import { DateTime } from 'luxon';
 import { Lane } from '../types/Lane';
 import { Tab } from '../types/Tab';
@@ -5,6 +6,8 @@ import { Tab } from '../types/Tab';
 export type Message =
   | { action: 'set-tab'; tab: Tab }
   | { action: 'set-lanes'; lanes: Array<Lane> }
+  | { action: 'set-snackbar'; severity: AlertColor; text: string }
+  | { action: 'close-snackbar' }
   | { action: 'new-reservation-toggle-rental' }
   | { action: 'new-reservation-set-starts-at'; value: DateTime | null }
   | { action: 'new-reservation-set-ends-at'; value: DateTime | null }

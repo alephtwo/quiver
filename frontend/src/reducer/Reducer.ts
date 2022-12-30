@@ -3,9 +3,9 @@ import { DateTime } from 'luxon';
 import { Tab } from '../types/Tab';
 import { Message } from './Message';
 import { createNewReservation } from './Rest';
-import { initialState, State } from './State';
+import { initialNewReservationState, State } from './State';
 
-export function reduce(state: State, message: Message) {
+export function reduce(state: State, message: Message): State {
   switch (message.action) {
     case 'set-tab':
       return produce(state, (next) => {
@@ -14,6 +14,16 @@ export function reduce(state: State, message: Message) {
     case 'set-lanes':
       return produce(state, (next) => {
         next.lanes = message.lanes;
+      });
+    case 'set-snackbar':
+      return produce(state, (next) => {
+        next.snackbar.open = true;
+        next.snackbar.severity = message.severity;
+        next.snackbar.text = message.text;
+      });
+    case 'close-snackbar':
+      return produce(state, (next) => {
+        next.snackbar = { open: false };
       });
     case 'new-reservation-toggle-rental':
       return produce(state, (next) => {
@@ -46,9 +56,11 @@ export function reduce(state: State, message: Message) {
       return state;
     case 'finish-save-new-reservation':
       return produce(state, (next) => {
-        next.newReservation = initialState.newReservation;
+        next.newReservation = initialNewReservationState();
         next.tab = Tab.HOME;
       });
+    default:
+      return state;
   }
 }
 

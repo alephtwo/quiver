@@ -1,3 +1,4 @@
+import { AlertColor } from '@mui/material';
 import { DateTime } from 'luxon';
 import { Lane } from '../types/Lane';
 import { Tab } from '../types/Tab';
@@ -5,6 +6,11 @@ import { Tab } from '../types/Tab';
 export interface State {
   tab: Tab;
   lanes: Array<Lane>;
+  snackbar: {
+    open: boolean;
+    severity?: AlertColor;
+    text?: string;
+  };
   newReservation: NewReservationState;
 }
 
@@ -17,15 +23,19 @@ export interface NewReservationState {
   selectingLanes: boolean;
 }
 
-export const initialState: State = {
+export const initialState = (): State => ({
   tab: Tab.HOME,
   lanes: [],
-  newReservation: {
-    rental: false,
-    startsAt: DateTime.now(),
-    endsAt: DateTime.now().plus({ hours: 1 }),
-    lanes: [],
-    notes: '',
-    selectingLanes: false,
-  },
-};
+  snackbar: { open: false },
+  newReservation: initialNewReservationState(),
+});
+
+// This needs to be lazy to ensure that the times are correct
+export const initialNewReservationState = (): NewReservationState => ({
+  rental: false,
+  startsAt: DateTime.now(),
+  endsAt: DateTime.now().plus({ hours: 1 }),
+  lanes: [],
+  notes: '',
+  selectingLanes: false,
+});
