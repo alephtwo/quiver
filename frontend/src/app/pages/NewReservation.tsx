@@ -18,7 +18,7 @@ import { Lane } from '../../types/Lane';
 import { Message } from '../../reducer/Message';
 import { NewReservationState } from '../../reducer/State';
 import { Tab } from '../../types/Tab';
-import { fetchLanes } from '../../reducer/Rest';
+import { createNewReservation, fetchLanes } from '../../reducer/Rest';
 
 const dateTimeInputFormat = 'yyyy-MM-dd HH:mm';
 
@@ -138,29 +138,4 @@ export function NewReservation(props: NewReservationProps): JSX.Element {
       </Button>
     </Stack>
   );
-}
-
-interface CreateNewReservationRequestPayload {
-  rental: boolean;
-  startsAt: DateTime;
-  endsAt: DateTime;
-  lanes: Array<Lane>;
-  notes: string;
-}
-async function createNewReservation(payload: CreateNewReservationRequestPayload): Promise<Response> {
-  const body = {
-    rental: payload.rental,
-    startsAt: payload.startsAt.toISO(),
-    endsAt: payload.endsAt ? payload.endsAt.toISO() : payload.startsAt.toISO(),
-    lanes: payload.lanes.map((lane) => lane.id),
-    notes: payload.notes,
-  };
-
-  return fetch('/api/reservations', {
-    method: 'post',
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
 }
