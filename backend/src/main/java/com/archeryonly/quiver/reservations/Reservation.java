@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
@@ -38,7 +39,7 @@ public class Reservation {
         this.id = id;
     }
 
-    @Column(name = "starts_at")
+    @NotNull @Column(name = "starts_at")
     public Instant getStartsAt() {
         return startsAt;
     }
@@ -47,7 +48,7 @@ public class Reservation {
         this.startsAt = startsAt;
     }
 
-    @Column(name = "ends_at")
+    @NotNull @Column(name = "ends_at")
     public Instant getEndsAt() {
         return endsAt;
     }
@@ -56,7 +57,7 @@ public class Reservation {
         this.endsAt = endsAt;
     }
 
-    @Column(name = "rental")
+    @NotNull @Column(name = "rental")
     public Boolean getRental() {
         return rental;
     }
@@ -74,7 +75,7 @@ public class Reservation {
         this.notes = notes;
     }
 
-    @Column(name = "created_at")
+    @NotNull @Column(name = "created_at")
     public Instant getCreatedAt() {
         return createdAt;
     }
@@ -83,7 +84,7 @@ public class Reservation {
         this.createdAt = createdAt;
     }
 
-    @Column(name = "updated_at")
+    @NotNull @Column(name = "updated_at")
     public Instant getUpdatedAt() {
         return updatedAt;
     }
