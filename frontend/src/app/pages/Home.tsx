@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card, CardContent, CardHeader, IconButton, Skeleton, Typography } from '@mui/material';
+import { Card, CardContent, CardHeader, CircularProgress, IconButton, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useEffect } from 'react';
 import { Message } from '../../reducer/Message';
@@ -28,8 +28,11 @@ export function Home(props: HomeProps): JSX.Element {
   });
 
   if (reservations === undefined) {
-    // TODO: Be more sophisticated about displaying loading
-    return <Skeleton variant="rectangular" width={40} height={40} />;
+    return (
+      <Stack spacing={2} alignItems="center">
+        <CircularProgress />
+      </Stack>
+    );
   }
 
   return (
