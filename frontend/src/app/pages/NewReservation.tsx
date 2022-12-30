@@ -54,7 +54,7 @@ export function NewReservation(props: NewReservationProps): JSX.Element {
           label="Starts At"
           value={state.startsAt.toJSDate()}
           inputFormat={dateTimeInputFormat}
-          renderInput={(params) => <TextField {...params} fullWidth />}
+          renderInput={(params) => <TextField required {...params} fullWidth />}
           onChange={(value: DateTime | null) => {
             dispatch({ action: 'new-reservation-set-starts-at', value: value });
           }}
@@ -63,7 +63,7 @@ export function NewReservation(props: NewReservationProps): JSX.Element {
           label="Ends At"
           value={state.endsAt.toJSDate()}
           inputFormat={dateTimeInputFormat}
-          renderInput={(params) => <TextField {...params} fullWidth />}
+          renderInput={(params) => <TextField required {...params} fullWidth />}
           onChange={(value: DateTime | null) => {
             dispatch({ action: 'new-reservation-set-ends-at', value: value });
           }}
@@ -85,6 +85,7 @@ export function NewReservation(props: NewReservationProps): JSX.Element {
           <TextField
             {...params}
             label="Lanes"
+            required
             InputProps={{
               ...params.InputProps,
               endAdornment: (
