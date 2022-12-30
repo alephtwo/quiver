@@ -2,13 +2,17 @@ import produce from 'immer';
 import { DateTime } from 'luxon';
 import { Tab } from '../types/Tab';
 import { Message } from './Message';
-import { createNewReservation, fetchLanes } from './Rest';
+import { createNewReservation, fetchLanes, fetchReservations } from './Rest';
 import { initialNewReservationState, State } from './State';
 
 export function reduce(state: State, message: Message): State {
+  console.debug(message);
   switch (message.action) {
     case 'set-tab':
       return produce(state, (next) => {
+        // Reset the state so it can be reloaded if need be on "page load"
+        next.reservations = undefined;
+        next.newReservation = initialNewReservationState();
         next.tab = message.tab;
       });
     case 'fetch-lanes':
@@ -61,6 +65,13 @@ export function reduce(state: State, message: Message): State {
       return produce(state, (next) => {
         next.newReservation = initialNewReservationState();
         next.tab = Tab.HOME;
+      });
+    case 'fetch-reservations':
+      void fetchReservations().then(message.then);
+      return state;
+    case 'set-reservations':
+      return produce(state, (next) => {
+        next.reservations = message.reservations;
       });
     default:
       return state;

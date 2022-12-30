@@ -1,6 +1,7 @@
 import { AlertColor } from '@mui/material';
 import { DateTime } from 'luxon';
 import { Lane } from '../types/Lane';
+import { Reservation } from '../types/Reservation';
 import { Tab } from '../types/Tab';
 
 export type Message =
@@ -16,4 +17,6 @@ export type Message =
   | { action: 'new-reservation-set-lanes'; value: Array<Lane> }
   | { action: 'new-reservation-set-notes'; value: string }
   | { action: 'save-new-reservation'; then: () => void }
-  | { action: 'finish-save-new-reservation' };
+  | { action: 'finish-save-new-reservation' }
+  | { action: 'fetch-reservations'; then: (reservations: Array<Reservation>) => void }
+  | { action: 'set-reservations'; reservations: Array<Reservation> };

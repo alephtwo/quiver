@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { Lane } from '../types/Lane';
+import { Reservation } from '../types/Reservation';
 
 export async function fetchLanes(): Promise<Array<Lane>> {
   return fetch('/api/lanes').then((r) => r.json() as Promise<Array<Lane>>);
@@ -28,4 +29,8 @@ export async function createNewReservation(payload: CreateNewReservationRequestP
       'Content-Type': 'application/json',
     },
   });
+}
+
+export async function fetchReservations(): Promise<Array<Reservation>> {
+  return fetch('/api/reservations').then((r) => r.json() as Promise<Array<Reservation>>);
 }

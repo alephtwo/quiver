@@ -19,7 +19,7 @@ export function Application(): JSX.Element {
       <Header />
       <Container>
         <Page tab={Tab.HOME} currentTab={tab}>
-          <Home />
+          <Home dispatch={dispatch} reservations={state.reservations} />
         </Page>
         <Page tab={Tab.SCHEDULE} currentTab={tab}>
           <Schedule />
