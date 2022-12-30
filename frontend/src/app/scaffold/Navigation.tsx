@@ -3,10 +3,11 @@ import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ScheduleSendIcon from '@mui/icons-material/ScheduleSend';
+import { Tab } from '../../types/Tab';
 
 interface NavigationProps {
   tab: number;
-  setTab: React.Dispatch<React.SetStateAction<number>>;
+  setTab: (tab: Tab) => void;
 }
 export function Navigation(props: NavigationProps): JSX.Element {
   const { tab, setTab } = props;
@@ -14,7 +15,7 @@ export function Navigation(props: NavigationProps): JSX.Element {
     <BottomNavigation
       showLabels
       value={tab}
-      onChange={(_event, value: number) => setTab(value)}
+      onChange={(_event, value: Tab) => setTab(value)}
       sx={styles.bottomNavigation}
     >
       <BottomNavigationAction label="Home" icon={<HomeIcon />} />
