@@ -48,7 +48,16 @@ export function Home(props: HomeProps): JSX.Element {
               title={buildTitle(r.lanes)}
               subheader={subheader}
               action={
-                <IconButton color="error">
+                <IconButton
+                  color="error"
+                  onClick={() =>
+                    dispatch({
+                      action: 'delete-reservation',
+                      id: r.id,
+                      then: () => dispatch({ action: 'finish-delete-reservation', id: r.id }),
+                    })
+                  }
+                >
                   <DeleteForeverIcon />
                 </IconButton>
               }

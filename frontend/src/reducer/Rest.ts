@@ -34,3 +34,7 @@ export async function createNewReservation(payload: CreateNewReservationRequestP
 export async function fetchReservations(): Promise<Array<Reservation>> {
   return fetch('/api/reservations').then((r) => r.json() as Promise<Array<Reservation>>);
 }
+
+export async function deleteReservation(id: string): Promise<Response> {
+  return fetch(`/api/reservations/${id}`, { method: 'delete' });
+}

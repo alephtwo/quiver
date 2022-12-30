@@ -19,4 +19,6 @@ export type Message =
   | { action: 'save-new-reservation'; then: () => void }
   | { action: 'finish-save-new-reservation' }
   | { action: 'fetch-reservations'; then: (reservations: Array<Reservation>) => void }
-  | { action: 'set-reservations'; reservations: Array<Reservation> };
+  | { action: 'set-reservations'; reservations: Array<Reservation> }
+  | { action: 'delete-reservation'; id: string; then: () => void }
+  | { action: 'finish-delete-reservation'; id: string };

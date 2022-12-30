@@ -2,7 +2,7 @@ import produce from 'immer';
 import { DateTime } from 'luxon';
 import { Tab } from '../types/Tab';
 import { Message } from './Message';
-import { createNewReservation, fetchLanes, fetchReservations } from './Rest';
+import { createNewReservation, deleteReservation, fetchLanes, fetchReservations } from './Rest';
 import { initialNewReservationState, State } from './State';
 
 export function reduce(state: State, message: Message): State {
@@ -72,6 +72,13 @@ export function reduce(state: State, message: Message): State {
     case 'set-reservations':
       return produce(state, (next) => {
         next.reservations = message.reservations;
+      });
+    case 'delete-reservation':
+      void deleteReservation(message.id).then(message.then);
+      return state;
+    case 'finish-delete-reservation':
+      return produce(state, (next) => {
+        next.reservations = next.reservations?.filter((r) => r.id !== message.id); // clear out so it can be requeried
       });
     default:
       return state;
