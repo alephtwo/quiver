@@ -5,6 +5,7 @@ import { Tab } from '../types/Tab';
 
 export type Message =
   | { action: 'set-tab'; tab: Tab }
+  | { action: 'fetch-lanes'; then: (lanes: Array<Lane>) => void }
   | { action: 'set-lanes'; lanes: Array<Lane> }
   | { action: 'set-snackbar'; severity: AlertColor; text: string }
   | { action: 'close-snackbar' }

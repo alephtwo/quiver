@@ -17,7 +17,6 @@ import { DateTime } from 'luxon';
 import { Lane } from '../../types/Lane';
 import { Message } from '../../reducer/Message';
 import { NewReservationState } from '../../reducer/State';
-import { fetchLanes } from '../../reducer/Rest';
 
 const dateTimeInputFormat = 'yyyy-MM-dd HH:mm';
 
@@ -34,15 +33,8 @@ export function NewReservation(props: NewReservationProps): JSX.Element {
     if (!loading) {
       return undefined;
     }
-
-    void fetchLanes().then((r: Array<Lane>) => dispatch({ action: 'set-lanes', lanes: r }));
+    dispatch({ action: 'fetch-lanes', then: (lanes) => dispatch({ action: 'set-lanes', lanes: lanes }) });
   }, [loading]);
-
-  useEffect(() => {
-    if (!open) {
-      dispatch({ action: 'set-lanes', lanes: [] });
-    }
-  }, [open]);
 
   return (
     <Stack spacing={2}>

@@ -2,7 +2,7 @@ import produce from 'immer';
 import { DateTime } from 'luxon';
 import { Tab } from '../types/Tab';
 import { Message } from './Message';
-import { createNewReservation } from './Rest';
+import { createNewReservation, fetchLanes } from './Rest';
 import { initialNewReservationState, State } from './State';
 
 export function reduce(state: State, message: Message): State {
@@ -11,6 +11,9 @@ export function reduce(state: State, message: Message): State {
       return produce(state, (next) => {
         next.tab = message.tab;
       });
+    case 'fetch-lanes':
+      void fetchLanes().then(message.then);
+      return state;
     case 'set-lanes':
       return produce(state, (next) => {
         next.lanes = message.lanes;
