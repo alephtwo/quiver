@@ -3,6 +3,7 @@ package com.archeryonly.quiver.reservations;
 import com.archeryonly.quiver.lanes.Lane;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -91,7 +92,7 @@ public class Reservation {
         this.updatedAt = updatedAt;
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "lane_reservations",
             joinColumns = {@JoinColumn(name = "reservation_id")},
