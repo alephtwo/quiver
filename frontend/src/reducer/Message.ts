@@ -10,4 +10,6 @@ export type Message =
   | { action: 'new-reservation-set-ends-at'; value: DateTime | null }
   | { action: 'new-reservation-set-selecting-lanes'; value: boolean }
   | { action: 'new-reservation-set-lanes'; value: Array<Lane> }
-  | { action: 'new-reservation-set-notes'; value: string };
+  | { action: 'new-reservation-set-notes'; value: string }
+  | { action: 'save-new-reservation'; then: () => void }
+  | { action: 'finish-save-new-reservation' };

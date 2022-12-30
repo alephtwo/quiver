@@ -1,7 +1,9 @@
 import produce from 'immer';
 import { DateTime } from 'luxon';
+import { Tab } from '../types/Tab';
 import { Message } from './Message';
-import { State } from './State';
+import { createNewReservation } from './Rest';
+import { initialState, State } from './State';
 
 export function reduce(state: State, message: Message) {
   switch (message.action) {
@@ -33,8 +35,20 @@ export function reduce(state: State, message: Message) {
       return produce(state, (next) => {
         next.newReservation.notes = message.value;
       });
-    default:
+    case 'save-new-reservation':
+      void createNewReservation({
+        rental: state.newReservation.rental,
+        startsAt: state.newReservation.startsAt,
+        endsAt: state.newReservation.endsAt,
+        lanes: state.newReservation.lanes,
+        notes: state.newReservation.notes,
+      }).then(message.then);
       return state;
+    case 'finish-save-new-reservation':
+      return produce(state, (next) => {
+        next.newReservation = initialState.newReservation;
+        next.tab = Tab.HOME;
+      });
   }
 }
 

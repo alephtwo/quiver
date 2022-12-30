@@ -118,21 +118,12 @@ export function NewReservation(props: NewReservationProps): JSX.Element {
         color="primary"
         fullWidth
         startIcon={<SendIcon />}
-        onClick={() => {
-          void createNewReservation({
-            rental: state.rental,
-            startsAt: state.startsAt,
-            endsAt: state.endsAt,
-            lanes: state.lanes,
-            notes: state.notes,
-          }).then((response) => {
-            if (response.ok) {
-              dispatch({ action: 'set-tab', tab: Tab.HOME });
-            } else {
-              console.error(response);
-            }
-          });
-        }}
+        onClick={() =>
+          dispatch({
+            action: 'save-new-reservation',
+            then: () => dispatch({ action: 'finish-save-new-reservation' }),
+          })
+        }
       >
         Submit
       </Button>
