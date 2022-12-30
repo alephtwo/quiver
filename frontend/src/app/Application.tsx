@@ -7,10 +7,11 @@ import { Schedule } from './pages/Schedule';
 import { NewReservation } from './pages/NewReservation';
 import { Navigation } from './scaffold/Navigation';
 import { Tab } from '../types/Tab';
-import * as State from '../reducer/State';
+import { initialState } from '../reducer/State';
+import { reduce } from '../reducer/Reducer';
 
 export function Application(): JSX.Element {
-  const [state, dispatch] = useReducer(State.reduce, State.initialState);
+  const [state, dispatch] = useReducer(reduce, initialState);
   const { tab } = state;
 
   return (
@@ -24,7 +25,7 @@ export function Application(): JSX.Element {
           <Schedule />
         </Page>
         <Page tab={Tab.NEW_RESERVATION} currentTab={tab}>
-          <NewReservation />
+          <NewReservation dispatch={dispatch} allLanes={state.lanes} state={state.newReservation} />
         </Page>
       </Container>
       <Navigation tab={tab} setTab={(t) => dispatch({ action: 'set-tab', tab: t })} />

@@ -1,22 +1,31 @@
-import produce from 'immer';
+import { DateTime } from 'luxon';
+import { Lane } from '../types/Lane';
 import { Tab } from '../types/Tab';
-import { Message } from './Message';
 
-interface State {
+export interface State {
   tab: Tab;
+  lanes: Array<Lane>;
+  newReservation: NewReservationState;
 }
 
-export function reduce(state: State, message: Message) {
-  switch (message.action) {
-    case 'set-tab':
-      return produce(state, (next) => {
-        next.tab = message.tab;
-      });
-    default:
-      return state;
-  }
+export interface NewReservationState {
+  rental: boolean;
+  startsAt: DateTime;
+  endsAt: DateTime;
+  lanes: Array<Lane>;
+  notes: string;
+  selectingLanes: boolean;
 }
 
 export const initialState: State = {
   tab: Tab.HOME,
+  lanes: [],
+  newReservation: {
+    rental: false,
+    startsAt: DateTime.now(),
+    endsAt: DateTime.now().plus({ hours: 1 }),
+    lanes: [],
+    notes: '',
+    selectingLanes: false,
+  },
 };

@@ -16,31 +16,34 @@ import SendIcon from '@mui/icons-material/Send';
 import { DateTime } from 'luxon';
 import { Lane } from '../../types/Lane';
 import { Flash, FlashMessage } from '../core/Flash';
+import { Message } from '../../reducer/Message';
+import { NewReservationState } from '../../reducer/State';
+import { Tab } from '../../types/Tab';
+import { fetchLanes } from '../../reducer/Rest';
 
 const dateTimeInputFormat = 'yyyy-MM-dd HH:mm';
 
-export function NewReservation(): JSX.Element {
-  const [rental, setRental] = useState(false);
-  const [startsAt, setStartsAt] = useState<Date>(DateTime.now().toJSDate());
-  const [endsAt, setEndsAt] = useState<Date>(DateTime.now().plus({ hours: 1 }).toJSDate());
-  const [lanes, setLanes] = useState<Array<Lane>>([]);
-  const [notes, setNotes] = useState('');
+interface NewReservationProps {
+  dispatch: React.Dispatch<Message>;
+  state: NewReservationState;
+  allLanes: Array<Lane>;
+}
+export function NewReservation(props: NewReservationProps): JSX.Element {
+  const { dispatch, state } = props;
   const [flash, setFlash] = useState<FlashMessage | undefined>(undefined);
-
-  const [allLanes, setAllLanes] = useState<readonly Lane[]>([]);
-  const [selectingLanes, setSelectingLanes] = useState(false);
-  const loading = selectingLanes && allLanes.length === 0;
+  const loading = state.selectingLanes && props.allLanes.length === 0;
 
   useEffect(() => {
     if (!loading) {
       return undefined;
     }
-    void fetchLanes().then((r: Array<Lane>) => setAllLanes(r));
+
+    void fetchLanes().then((r: Array<Lane>) => dispatch({ action: 'set-lanes', lanes: r }));
   }, [loading]);
 
   useEffect(() => {
     if (!open) {
-      setAllLanes([]);
+      dispatch({ action: 'set-lanes', lanes: [] });
     }
   }, [open]);
 
@@ -51,49 +54,45 @@ export function NewReservation(): JSX.Element {
       </Typography>
       <Flash message={flash} onClose={() => setFlash(undefined)} />
       <FormGroup>
-        <FormControlLabel label="Rental" control={<Checkbox checked={rental} onChange={() => setRental(!rental)} />} />
+        <FormControlLabel
+          label="Rental"
+          control={
+            <Checkbox checked={state.rental} onChange={() => dispatch({ action: 'new-reservation-toggle-rental' })} />
+          }
+        />
       </FormGroup>
       <Stack direction="row" spacing={1} justifyContent="space-evenly">
         <DateTimePicker
           label="Starts At"
-          value={startsAt}
-          onChange={(value: DateTime | null) => {
-            if (!value) {
-              console.error('startsAt cannot be null');
-              return;
-            }
-            setStartsAt(value.toJSDate());
-            setEndsAt(value.plus({ hours: 1 }).toJSDate());
-          }}
+          value={state.startsAt.toJSDate()}
           inputFormat={dateTimeInputFormat}
           renderInput={(params) => <TextField {...params} fullWidth />}
+          onChange={(value: DateTime | null) => {
+            dispatch({ action: 'new-reservation-set-starts-at', value: value });
+          }}
         />
         <DateTimePicker
           label="Ends At"
-          value={endsAt}
-          onChange={(value: DateTime | null) => {
-            if (!value) {
-              console.error('endsAt cannot be null');
-              return;
-            }
-            setEndsAt(value.toJSDate());
-          }}
+          value={state.endsAt.toJSDate()}
           inputFormat={dateTimeInputFormat}
           renderInput={(params) => <TextField {...params} fullWidth />}
+          onChange={(value: DateTime | null) => {
+            dispatch({ action: 'new-reservation-set-ends-at', value: value });
+          }}
         />
       </Stack>
       <Autocomplete
         multiple
         filterSelectedOptions
-        open={selectingLanes}
+        open={state.selectingLanes}
         loading={loading}
-        onOpen={() => setSelectingLanes(true)}
-        onClose={() => setSelectingLanes(false)}
+        onOpen={() => dispatch({ action: 'new-reservation-set-selecting-lanes', value: true })}
+        onClose={() => dispatch({ action: 'new-reservation-set-selecting-lanes', value: false })}
         isOptionEqualToValue={(option, value) => option.id == value.id}
         getOptionLabel={(option: Lane) => option.number.toString()}
-        options={allLanes}
-        value={lanes}
-        onChange={(_e, v) => setLanes(v)}
+        options={props.allLanes}
+        value={state.lanes}
+        onChange={(_e, v) => dispatch({ action: 'new-reservation-set-lanes', value: v })}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -110,7 +109,13 @@ export function NewReservation(): JSX.Element {
           />
         )}
       />
-      <TextField multiline rows={2} label="Notes" value={notes} onChange={(e) => setNotes(e.target.value)} />
+      <TextField
+        multiline
+        rows={2}
+        label="Notes"
+        value={state.notes}
+        onChange={(e) => dispatch({ action: 'new-reservation-set-notes', value: e.target.value })}
+      />
       <Button
         variant="contained"
         color="primary"
@@ -118,20 +123,15 @@ export function NewReservation(): JSX.Element {
         startIcon={<SendIcon />}
         onClick={() => {
           void createNewReservation({
-            rental: rental,
-            startsAt: startsAt,
-            endsAt: endsAt,
-            lanes: lanes,
-            notes: notes,
+            rental: state.rental,
+            startsAt: state.startsAt,
+            endsAt: state.endsAt,
+            lanes: state.lanes,
+            notes: state.notes,
           }).then((response) => {
             if (response.ok) {
-              // reset
-              setRental(false);
-              setStartsAt(DateTime.now().toJSDate());
-              setEndsAt(DateTime.now().plus({ hours: 1 }).toJSDate());
-              setLanes([]);
-              setNotes('');
               setFlash({ severity: 'success', message: 'Saved!' });
+              dispatch({ action: 'set-tab', tab: Tab.HOME });
             } else {
               console.error(response);
             }
@@ -144,22 +144,18 @@ export function NewReservation(): JSX.Element {
   );
 }
 
-async function fetchLanes(): Promise<Array<Lane>> {
-  return fetch('/api/lanes').then((r) => r.json() as Promise<Array<Lane>>);
-}
-
 interface CreateNewReservationRequestPayload {
   rental: boolean;
-  startsAt: Date;
-  endsAt: Date;
+  startsAt: DateTime;
+  endsAt: DateTime;
   lanes: Array<Lane>;
   notes: string;
 }
 async function createNewReservation(payload: CreateNewReservationRequestPayload): Promise<Response> {
   const body = {
     rental: payload.rental,
-    startsAt: payload.startsAt.toISOString(),
-    endsAt: payload.endsAt ? payload.endsAt.toISOString() : payload.startsAt.toISOString(),
+    startsAt: payload.startsAt.toISO(),
+    endsAt: payload.endsAt ? payload.endsAt.toISO() : payload.startsAt.toISO(),
     lanes: payload.lanes.map((lane) => lane.id),
     notes: payload.notes,
   };
